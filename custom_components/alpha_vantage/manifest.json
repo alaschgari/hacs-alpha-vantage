@@ -1,0 +1,18 @@
+{
+    "domain": "alpha_vantage",
+    "name": "Alpha Vantage",
+    "description": "Track stock and financial market data. Requires an API Key from alphavantage.co.",
+    "documentation": "https://github.com/alaschgari/hacs-alpha-vantage",
+    "issue_tracker": "https://github.com/alaschgari/hacs-alpha-vantage/issues",
+    "dependencies": [],
+    "codeowners": [
+        "@alaschgari"
+    ],
+    "config_flow": true,
+    "iot_class": "cloud_polling",
+    "integration_type": "service",
+    "loggers": [
+        "custom_components.alpha_vantage"
+    ],
+    "version": "1.0.0"
+}

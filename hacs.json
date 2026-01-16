@@ -1,0 +1,7 @@
+{
+    "name": "Alpha Vantage",
+    "content_in_root": false,
+    "zip_release": false,
+    "filename": "custom_components/alpha_vantage",
+    "render_readme": true
+}

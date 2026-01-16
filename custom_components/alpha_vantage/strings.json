@@ -1,0 +1,39 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "Alpha Vantage Configuration",
+                "description": "Enter your Alpha Vantage API Key and the stock symbols you want to track (comma-separated). You can get a free API key at https://www.alphavantage.co/support/#api-key",
+                "data": {
+                    "api_key": "API Key",
+                    "symbols": "Symbols (e.g., AAPL, TSLA, MSFT)",
+                    "scan_interval": "Update Interval (seconds)",
+                    "decimals": "Number of decimals",
+                    "show_sensors": "Select sensors to enable"
+                }
+            }
+        },
+        "error": {
+            "invalid_auth": "Invalid API Key",
+            "cannot_connect": "Failed to connect to Alpha Vantage",
+            "unknown": "Unexpected error"
+        },
+        "abort": {
+            "already_configured": "This integration is already configured."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Alpha Vantage Options",
+                "data": {
+                    "api_key": "API Key",
+                    "symbols": "Symbols (comma-separated)",
+                    "scan_interval": "Update Interval (seconds)",
+                    "decimals": "Number of decimals",
+                    "show_sensors": "Select sensors to enable"
+                }
+            }
+        }
+    }
+}
