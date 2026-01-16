@@ -9,6 +9,9 @@
 
 This custom integration for Home Assistant allows you to track stock and financial market data using the Alpha Vantage API.
 
+> [!NOTE]
+> Home Assistant already has a native Alpha Vantage integration. This project is a **custom integration** that provides an alternative way to track stock data, modeled after the CoinMarketCap integration, with a focus on ease of use via the UI and specific sensor configurations.
+
 ## Prerequisites
 To use this integration, you need an **Alpha Vantage API Key**.
 - You can get a free API key by signing up at [alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key).
