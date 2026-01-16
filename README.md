@@ -48,6 +48,22 @@ This integration utilizes the following Alpha Vantage API function:
 3. Search for **Alpha Vantage**.
 4. Enter your **API Key** (from [alphavantage.co](https://www.alphavantage.co/)) and the **Symbols** (comma-separated, e.g., `AAPL,TSLA,MSFT`) you want to track.
 
+## Troubleshooting
+
+### Sensors are "Unavailable"
+- Check the Home Assistant logs for "Alpha Vantage API Note" or "Alpha Vantage API Error".
+- You might have reached the **25 requests/day** limit. Increase your update interval.
+- Your API key might be invalid. Go to the integration page and check for a "Re-authenticate" notification.
+
+### Statistics not showing
+- Sensors like Price and Volume support long-term statistics. If they don't appear, wait for at least two update cycles (default 1 hour each) for the data to populate.
+
+## Quality Scale
+This integration is developed to adhere to the [Home Assistant Quality Scale](https://www.home-assistant.io/docs/quality_scale/):
+- 🥉 **Bronze**: UI setup, standard coding style.
+- 🥈 **Silver**: Re-authentication flow, diagnostics support, error recovery.
+- 🥇 **Gold**: Categorized entities, translation support, statistical metadata.
+
 ## Support
 
 If you find this integration useful and want to support its development, you can buy me a coffee! Your support is greatly appreciated and helps keep this project alive and updated.

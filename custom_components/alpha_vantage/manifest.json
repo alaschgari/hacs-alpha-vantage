@@ -14,5 +14,5 @@
     "loggers": [
         "custom_components.alpha_vantage"
     ],
-    "version": "1.0.0"
+    "version": "1.1.0"
 }

@@ -53,6 +53,33 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
         )
 
+    async def async_step_reauth(self, user_input=None):
+        """Handle re-authentication."""
+        return await self.async_step_reauth_confirm()
+
+    async def async_step_reauth_confirm(self, user_input=None):
+        """Handle re-authentication confirmation."""
+        errors = {}
+        if user_input is not None:
+            valid = await self._test_api_key(user_input[CONF_API_KEY])
+            if valid:
+                entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
+                self.hass.config_entries.async_update_entry(
+                    entry, data={**entry.data, CONF_API_KEY: user_input[CONF_API_KEY]}
+                )
+                await self.hass.config_entries.async_reload(entry.entry_id)
+                return self.async_abort(reason="reauth_successful")
+            else:
+                errors["base"] = "invalid_auth"
+
+        return self.async_show_form(
+            step_id="reauth_confirm",
+            data_schema=vol.Schema({
+                vol.Required(CONF_API_KEY): str,
+            }),
+            errors=errors,
+        )
+
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):

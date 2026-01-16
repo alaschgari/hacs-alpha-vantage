@@ -6,6 +6,7 @@ from datetime import timedelta
 import aiohttp
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -22,7 +23,7 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["sensor"]
+PLATFORMS = ["sensor", "diagnostics"]
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Alpha Vantage from a config entry."""
@@ -78,6 +79,7 @@ class AlphaVantageDataUpdateCoordinator(DataUpdateCoordinator):
         self.symbols = [s.strip().upper() for s in symbols.split(",")]
         self.decimals = decimals
         self.config_entry = config_entry
+        self._last_success = True  # Track status to reduce log noise
         
         super().__init__(
             hass,
@@ -105,12 +107,21 @@ class AlphaVantageDataUpdateCoordinator(DataUpdateCoordinator):
                     if "Global Quote" in data:
                         return data["Global Quote"]
                     elif "Note" in data:
+                        # Rate limit notes are warnings
                         _LOGGER.warning("Alpha Vantage API Note: %s", data["Note"])
                     elif "Error Message" in data:
-                        _LOGGER.error("Alpha Vantage API Error for %s: %s", symbol, data["Error Message"])
+                        msg = data["Error Message"]
+                        _LOGGER.error("Alpha Vantage API Error for %s: %s", symbol, msg)
+                        # Detect invalid API Key to trigger re-auth flow
+                        if "the apikey parameter" in msg.lower():
+                             raise ConfigEntryAuthFailed(f"Invalid API Key: {msg}")
                     return None
             except Exception as err:
-                _LOGGER.error("Exception fetching %s: %s", symbol, err)
+                if self._last_success:
+                    _LOGGER.error("Error communicating with Alpha Vantage: %s", err)
+                    self._last_success = False
+                else:
+                    _LOGGER.debug("Still failing to communicate with Alpha Vantage: %s", err)
                 return None
 
         # Fetch symbols sequentially to respect rate limits
@@ -129,6 +140,9 @@ class AlphaVantageDataUpdateCoordinator(DataUpdateCoordinator):
                 await asyncio.sleep(2)  # Small delay between requests
 
         if not final_data["symbols"]:
-            raise UpdateFailed("Failed to fetch any data from Alpha Vantage. Likely rate limited.")
+            if self._last_success:
+                raise UpdateFailed("Failed to fetch any data from Alpha Vantage. Likely rate limited.")
+            return {} # Return empty data to suppress further errors
             
+        self._last_success = True # Reset on success
         return final_data

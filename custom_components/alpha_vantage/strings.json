@@ -8,8 +8,15 @@
                     "api_key": "API Key",
                     "symbols": "Symbols (e.g., AAPL, TSLA, MSFT)",
                     "scan_interval": "Update Interval (seconds)",
-                    "decimals": "Number of decimals",
-                    "show_sensors": "Select sensors to enable"
+                    "decimals": "Decimal Places",
+                    "show_sensors": "Select Sensors"
+                }
+            },
+            "reauth_confirm": {
+                "title": "Re-authenticate",
+                "description": "The API Key for Alpha Vantage is no longer valid. Please enter a new one.",
+                "data": {
+                    "api_key": "API Key"
                 }
             }
         },

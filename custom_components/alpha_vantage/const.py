@@ -20,50 +20,61 @@ SENSOR_TYPES = {
     "price": {
         "name": "Price",
         "json_path": ["05. price"],
-        "unit": "$",
-        "icon": "mdi:cash",
-        "category": "symbol"
+        "unit": None,  # Will be set in sensor.py if needed
+        "icon": "mdi:currency-usd",
+        "category": "symbol",
+        "device_class": "monetary",
+        "state_class": "measurement",
     },
     "change": {
         "name": "Change",
         "json_path": ["09. change"],
-        "unit": "$",
-        "icon": "mdi:chart-line-variant",
-        "category": "symbol"
+        "unit": None,
+        "icon": "mdi:trending-up",
+        "category": "symbol",
+        "state_class": "measurement",
     },
     "change_percent": {
         "name": "Change Percent",
         "json_path": ["10. change percent"],
         "unit": "%",
-        "icon": "mdi:chart-line",
-        "category": "symbol"
+        "icon": "mdi:percent",
+        "category": "symbol",
+        "state_class": "measurement",
     },
     "volume": {
         "name": "Volume",
         "json_path": ["06. volume"],
         "unit": None,
         "icon": "mdi:chart-bar",
-        "category": "symbol"
+        "category": "symbol",
+        "state_class": "measurement",
     },
     "high": {
-        "name": "Day High",
+        "name": "High",
         "json_path": ["03. high"],
-        "unit": "$",
+        "unit": None,
         "icon": "mdi:arrow-up-bold",
-        "category": "symbol"
+        "category": "symbol",
+        "device_class": "monetary",
+        "state_class": "measurement",
     },
     "low": {
-        "name": "Day Low",
+        "name": "Low",
         "json_path": ["04. low"],
-        "unit": "$",
+        "unit": None,
         "icon": "mdi:arrow-down-bold",
-        "category": "symbol"
+        "category": "symbol",
+        "device_class": "monetary",
+        "state_class": "measurement",
     },
     "previous_close": {
         "name": "Previous Close",
         "json_path": ["08. previous close"],
-        "unit": "$",
+        "unit": None,
         "icon": "mdi:history",
-        "category": "symbol"
+        "category": "symbol",
+        "device_class": "monetary",
+        "state_class": "measurement",
     },
 }

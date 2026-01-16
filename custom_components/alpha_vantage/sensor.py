@@ -35,12 +35,15 @@ class AlphaVantageSensor(CoordinatorEntity, SensorEntity):
         
         self._attr_name = f"{self._symbol} {self._sensor_info['name']}"
         self._attr_unique_id = f"{DOMAIN}_{self._symbol}_{sensor_type}"
+        self._attr_translation_key = sensor_type
             
         self._entry_id = coordinator.config_entry.entry_id
         
-        # Set icon if defined
-        if "icon" in self._sensor_info:
-            self._attr_icon = self._sensor_info["icon"]
+        # Set attributes from sensor_info
+        self._attr_icon = self._sensor_info.get("icon")
+        self._attr_device_class = self._sensor_info.get("device_class")
+        self._attr_state_class = self._sensor_info.get("state_class")
+        self._attr_native_unit_of_measurement = self._sensor_info.get("unit")
 
     @property
     def device_info(self) -> DeviceInfo:
@@ -53,7 +56,7 @@ class AlphaVantageSensor(CoordinatorEntity, SensorEntity):
         )
 
     @property
-    def state(self):
+    def native_value(self):
         """Return the state of the sensor."""
         data = self.coordinator.data.get('symbols', {}).get(self._symbol)
         
@@ -79,11 +82,6 @@ class AlphaVantageSensor(CoordinatorEntity, SensorEntity):
                 return value
             
         return None
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-        return self._sensor_info.get("unit")
 
     @property
     def extra_state_attributes(self):
