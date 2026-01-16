@@ -12,6 +12,12 @@ This custom integration for Home Assistant allows you to track stock and financi
 > [!NOTE]
 > Home Assistant already has a native Alpha Vantage integration. This project is a **custom integration** that provides an alternative way to track stock data with a focus on ease of use via the UI and specific sensor configurations.
 
+> [!CAUTION]
+> **API Limit Warning (2026)**: The Alpha Vantage Free Tier now has a extremely strict limit of **25 requests per day** and **5 requests per minute**. 
+> - With the default 1-hour update interval, you can track **one** symbol without hitting the daily limit.
+> - If you track multiple symbols, you must increase the update interval accordingly (e.g., 4 hours for 5 symbols).
+> - Exceeding the limit will result in your sensors showing `Unavailable`.
+
 ## Prerequisites
 To use this integration, you need an **Alpha Vantage API Key**.
 - You can get a free API key by signing up at [alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key).

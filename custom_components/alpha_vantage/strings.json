@@ -3,7 +3,7 @@
         "step": {
             "user": {
                 "title": "Alpha Vantage Configuration",
-                "description": "Enter your Alpha Vantage API Key and the stock symbols you want to track (comma-separated). You can get a free API key at https://www.alphavantage.co/support/#api-key",
+                "description": "Enter your API Key and symbols. \n\n⚠️ **IMPORTANT**: The Free Tier is limited to **25 requests per day**. With the default 1-hour interval, you can track 1 symbol. For more symbols, increase the interval (e.g. 14400 for 5 symbols).",
                 "data": {
                     "api_key": "API Key",
                     "symbols": "Symbols (e.g., AAPL, TSLA, MSFT)",

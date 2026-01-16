@@ -8,7 +8,7 @@ CONF_SCAN_INTERVAL = "scan_interval"
 CONF_DECIMALS = "decimals"
 CONF_SHOW_SENSORS = "show_sensors"
 
-DEFAULT_SCAN_INTERVAL = 300  # 5 minutes
+DEFAULT_SCAN_INTERVAL = 3600  # 1 hour (to stay within 25 req/day limit)
 DEFAULT_DECIMALS = 2
 DEFAULT_SENSORS = ["price", "change", "change_percent"]
 
