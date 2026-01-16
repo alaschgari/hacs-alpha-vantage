@@ -5,7 +5,7 @@ from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.components.diagnostics import redact_datafield
+from homeassistant.components.diagnostics import async_redact_data
 
 from .const import DOMAIN, CONF_API_KEY
 
@@ -18,7 +18,7 @@ async def async_get_config_entry_diagnostics(
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
     diagnostics_data = {
-        "entry": redact_datafield(entry.as_dict(), TO_REDACT),
+        "entry": async_redact_data(entry.as_dict(), TO_REDACT),
         "data": coordinator.data,
     }
 
