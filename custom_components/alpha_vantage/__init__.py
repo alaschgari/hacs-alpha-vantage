@@ -113,21 +113,22 @@ class AlphaVantageDataUpdateCoordinator(DataUpdateCoordinator):
                 _LOGGER.error("Exception fetching %s: %s", symbol, err)
                 return None
 
-        # Execute all fetches in parallel
-        # Note: Alpha Vantage free tier has a limit of 5 requests per minute.
-        # We might need to handle rate limiting here if many symbols are configured.
-        results = await asyncio.gather(
-            *[fetch_symbol_data(symbol) for symbol in self.symbols],
-            return_exceptions=True
-        )
-
+        # Fetch symbols sequentially to respect rate limits
         final_data = {"symbols": {}}
         
-        for i, symbol in enumerate(self.symbols):
-            if isinstance(results[i], dict) and results[i]:
-                final_data["symbols"][symbol] = results[i]
+        for symbol in self.symbols:
+            data = await fetch_symbol_data(symbol)
+            if data:
+                final_data["symbols"][symbol] = data
+            
+            # If we have more symbols to fetch, wait a bit to avoid hitting 5 requests/min limit
+            # 12 seconds would be perfect for 5/min, but let's try 1 second first 
+            # as some users might have premium or the limiter might be less strict for bursts.
+            # We will handle the "Note" (rate limit) in fetch_symbol_data.
+            if len(self.symbols) > 1 and symbol != self.symbols[-1]:
+                await asyncio.sleep(2)  # Small delay between requests
 
         if not final_data["symbols"]:
-            raise UpdateFailed("Failed to fetch any data from Alpha Vantage")
+            raise UpdateFailed("Failed to fetch any data from Alpha Vantage. Likely rate limited.")
             
         return final_data
