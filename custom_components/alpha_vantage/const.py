@@ -23,7 +23,6 @@ SENSOR_TYPES = {
         "unit": None,  # Will be set in sensor.py if needed
         "icon": "mdi:currency-usd",
         "category": "symbol",
-        "device_class": "monetary",
         "state_class": "measurement",
     },
     "change": {
@@ -56,7 +55,6 @@ SENSOR_TYPES = {
         "unit": None,
         "icon": "mdi:arrow-up-bold",
         "category": "symbol",
-        "device_class": "monetary",
         "state_class": "measurement",
     },
     "low": {
@@ -65,7 +63,6 @@ SENSOR_TYPES = {
         "unit": None,
         "icon": "mdi:arrow-down-bold",
         "category": "symbol",
-        "device_class": "monetary",
         "state_class": "measurement",
     },
     "previous_close": {
@@ -74,7 +71,6 @@ SENSOR_TYPES = {
         "unit": None,
         "icon": "mdi:history",
         "category": "symbol",
-        "device_class": "monetary",
         "state_class": "measurement",
     },
 }
